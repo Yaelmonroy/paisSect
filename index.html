@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Formulario de Ubicación</title>
+    <link rel="stylesheet" href="css/imagen.css">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2>Formulario de Ubicación</h2>
+    <form id="ubicacionForm">
+        <div class="form-group">
+            <label for="pais">País:</label>
+            <select class="form-select" id="pais" name="pais" onchange="ubicacionForm.cargarEstados()">
+                <option value="" disabled selected>Selecciona un país</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="estado">Estado:</label>
+            <select class="form-select" id="estado" name="estado" onchange="ubicacionForm.cargarMunicipios()"></select>
+        </div>
+
+        <div class="form-group">
+            <label for="municipio">Municipio:</label>
+            <select class="form-select" id="municipio" name="municipio" onchange="ubicacionForm.cargarLocalidades()"></select>
+        </div>
+
+        <div class="form-group">
+            <label for="localidad">Localidad:</label>
+            <select class="form-select" id="localidad" name="localidad"></select>
+        </div>
+
+        <button type="button" class="btn btn-primary" onclick="mostrarSeleccion()">Enviar</button>
+    </form>
+
+    <div id="resultado"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/UbicacionForm.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        ubicacionForm.cargarPaises();
+    });
+
+    function mostrarSeleccion() {
+        const paisSeleccionado = document.getElementById("pais").value;
+        const estadoSeleccionado = document.getElementById("estado").value;
+        const municipioSeleccionado = document.getElementById("municipio").value;
+        const localidadSeleccionada = document.getElementById("localidad").value;
+
+        // Crear una lista
+        const lista = document.createElement("ul");
+
+        // Agregar elementos de la lista
+        agregarElementoLista(lista, `País: ${paisSeleccionado}`);
+        agregarElementoLista(lista, `Estado: ${estadoSeleccionado}`);
+        agregarElementoLista(lista, `Municipio: ${municipioSeleccionado}`);
+        agregarElementoLista(lista, `Localidad: ${localidadSeleccionada}`);
+
+        // Limpiar contenido anterior y agregar la lista al elemento con el ID "resultado"
+        const resultadoElemento = document.getElementById("resultado");
+        resultadoElemento.innerHTML = "";
+        resultadoElemento.appendChild(lista);
+    }
+
+    function agregarElementoLista(lista, texto) {
+        const elementoLista = document.createElement("li");
+        elementoLista.innerText = texto;
+        lista.appendChild(elementoLista);
+    }
+</script>
+
+</body>
+</html>
